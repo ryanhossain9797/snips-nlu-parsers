@@ -164,7 +164,7 @@ where
             })
             .collect::<Result<Vec<_>>>()?
             .into_iter()
-            .flat_map(|v| v)
+            .flatten()
             .collect())
     }
 }
@@ -343,7 +343,7 @@ mod test {
     }
 
     fn get_music_track_parser_builder() -> ParserBuilder {
-        let track_entity_parser_builder = EntityParserBuilder::default()
+        EntityParserBuilder::default()
             .minimum_tokens_ratio(0.7)
             .gazetteer(gazetteer!(
                 (
@@ -351,8 +351,7 @@ mod test {
                     "Harder Better Faster Stronger"
                 ),
                 ("what s my age again", "What's my age again"),
-            ));
-        track_entity_parser_builder
+            ))
     }
 
     fn get_music_artist_parser_builder() -> ParserBuilder {

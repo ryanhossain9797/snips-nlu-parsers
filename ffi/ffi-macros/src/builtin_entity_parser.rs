@@ -157,7 +157,7 @@ pub fn extract_builtin_entity(
     } else {
         None
     };
-    let opt_filters = opt_filters.as_ref().map(|vec| vec.as_slice());
+    let opt_filters = opt_filters.as_deref();
 
     parser.extract_entities(
         sentence,

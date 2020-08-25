@@ -32,11 +32,9 @@ pub fn de_examples<T: IntoBuiltinEntityKind>(entity_kind: &T) -> &'static [&'sta
         BuiltinEntityKind::Time => &[],
         BuiltinEntityKind::DatePeriod => &[],
         BuiltinEntityKind::TimePeriod => &[],
-        BuiltinEntityKind::Percentage => &[
-            "25%",
-            "zwanzig Prozent",
-            "zwei tausend und fünfzig Prozent",
-        ],
+        BuiltinEntityKind::Percentage => {
+            &["25%", "zwanzig Prozent", "zwei tausend und fünfzig Prozent"]
+        }
         BuiltinEntityKind::MusicAlbum => &["Discovery"],
         BuiltinEntityKind::MusicArtist => &["Daft Punk"],
         BuiltinEntityKind::MusicTrack => &["Harder Better Faster Stronger"],
@@ -532,7 +530,7 @@ mod tests {
             for language in entity_kind.supported_languages() {
                 let examples = entity_kind.examples(*language);
                 assert!(
-                    examples.len() >= 1,
+                    examples.is_empty(),
                     "No examples provided for entity '{:?}' in language '{:?}'",
                     entity_kind,
                     language
@@ -544,9 +542,9 @@ mod tests {
     #[test]
     fn test_entity_examples_should_not_be_provided_for_non_supported_languages() {
         for entity_kind in BuiltinEntityKind::all() {
-            let all_languages: HashSet<&Language> = Language::all().into_iter().collect();
+            let all_languages: HashSet<&Language> = Language::all().iter().collect();
             let supported_languages: HashSet<&Language> =
-                entity_kind.supported_languages().into_iter().collect();
+                entity_kind.supported_languages().iter().collect();
             let non_supported_languages: HashSet<&&Language> =
                 all_languages.difference(&supported_languages).collect();
             for language in non_supported_languages {

@@ -49,13 +49,13 @@ where
             description: self.description().to_string(),
             examples: self
                 .examples(language)
-                .into_iter()
+                .iter()
                 .map(|ex| ex.to_string())
                 .collect(),
             result_description: self.result_description(),
             supported_languages: self
                 .supported_languages()
-                .into_iter()
+                .iter()
                 .map(|l| l.to_string())
                 .collect(),
         }
@@ -69,7 +69,7 @@ pub trait ParsableLanguage {
 impl ParsableLanguage for Language {
     fn supported_entity_kinds(&self) -> Vec<BuiltinEntityKind> {
         BuiltinEntityKind::all()
-            .into_iter()
+            .iter()
             .filter(|e| e.supported_languages().contains(self))
             .cloned()
             .collect()

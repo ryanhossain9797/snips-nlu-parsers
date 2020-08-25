@@ -123,13 +123,13 @@ impl BuiltinEntityParser {
                 let gazetteer_entity_kinds: Option<Vec<BuiltinGazetteerEntityKind>> =
                     filter_entity_kinds.map(|kinds| {
                         kinds
-                            .into_iter()
+                            .iter()
                             .flat_map(|kind| kind.try_into_gazetteer_kind().ok())
                             .collect()
                     });
                 gazetteer_parser.extract_builtin_entities(
                     sentence,
-                    gazetteer_entity_kinds.as_ref().map(|kinds| &**kinds),
+                    gazetteer_entity_kinds.as_deref(),
                     max_alternative_resolved_values,
                 )?
             }
